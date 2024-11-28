@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.techsorcerer.mobile_app_ws.exceptions.UserServiceException;
 import com.techsorcerer.mobile_app_ws.service.UserService;
 import com.techsorcerer.mobile_app_ws.shared.dto.UserDto;
 import com.techsorcerer.mobile_app_ws.ui.model.request.UserDetailsRequestModel;
@@ -42,8 +43,8 @@ public class UserController {
 		// java obj of the class and used in business logic
 		UserRest returnValue = new UserRest();
 		
-		if(userDetails.getFirstName().isEmpty()) throw new Exception(ErrorMessages.MISSING_REQUIRED_FIELDS.getErrorMessage());
-		if(userDetails.getEmail().isEmpty()) throw new Exception(ErrorMessages.EMAIL_ID_IS_MISSING.getErrorMessage());
+		if(userDetails.getFirstName().isEmpty()) throw new NullPointerException("The object is null");
+//		if(userDetails.getEmail().isEmpty()) throw new UserServiceException(ErrorMessages.EMAIL_ID_IS_MISSING.getErrorMessage());
 
 		UserDto userDto = new UserDto();
 		BeanUtils.copyProperties(userDetails, userDto);
