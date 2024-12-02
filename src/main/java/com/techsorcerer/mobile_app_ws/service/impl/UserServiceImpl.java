@@ -10,11 +10,14 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.techsorcerer.mobile_app_ws.exceptions.UserServiceException;
 import com.techsorcerer.mobile_app_ws.io.entity.UserEntity;
 import com.techsorcerer.mobile_app_ws.io.repository.UserRepository;
 import com.techsorcerer.mobile_app_ws.service.UserService;
 import com.techsorcerer.mobile_app_ws.shared.Utils;
 import com.techsorcerer.mobile_app_ws.shared.dto.UserDto;
+import com.techsorcerer.mobile_app_ws.ui.response.ErrorMessages;
+
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -75,11 +78,40 @@ public class UserServiceImpl implements UserService {
 		UserEntity userEntity = userRepository.findByUserId(userId);
 
 		if (userEntity == null)
-			throw new UsernameNotFoundException(userId);
+			throw new UserServiceException("User with "+userId+" not found");
 
 		BeanUtils.copyProperties(userEntity, returnValue);
 
 		return returnValue;
+	}
+
+	@Override
+	public UserDto updateUser(String userId, UserDto userDto) {
+		UserDto returnValue = new UserDto();
+		UserEntity userEntity = userRepository.findByUserId(userId);
+		
+		if (userEntity == null)
+			throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+		
+		userEntity.setFirstName(userDto.getFirstName());
+		userEntity.setLastName(userDto.getLastName());
+		
+		UserEntity upatedUserDetails = userRepository.save(userEntity);
+		
+		BeanUtils.copyProperties(upatedUserDetails, returnValue);
+		
+		return returnValue;
+	}
+
+	@Override
+	public void deleteUser(String userId) {
+		
+		UserEntity userEntity = userRepository.findByUserId(userId);
+		
+		if (userEntity == null)
+			throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+		
+		userRepository.delete(userEntity);
 	}
 
 }
