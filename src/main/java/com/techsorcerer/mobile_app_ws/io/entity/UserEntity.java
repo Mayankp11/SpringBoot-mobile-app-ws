@@ -29,6 +29,9 @@ public class UserEntity implements Serializable {
 	private String email;
 
 	@Column(nullable = false)
+	private String password;
+
+	@Column(nullable = false)
 	private String encryptedPassword;
 
 	private String emailVerificationToken;
@@ -74,6 +77,14 @@ public class UserEntity implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getEncryptedPassword() {
