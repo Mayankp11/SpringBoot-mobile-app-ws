@@ -1,6 +1,7 @@
 package com.techsorcerer.mobile_app_ws.shared.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class UserDto implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -12,7 +13,8 @@ public class UserDto implements Serializable {
 	private String password;
 	private String encryptedPassword;
 	private String emailVerificationToken;
-	private boolean emailVerificationStatus = false;
+	private boolean emailVerificationStatus;
+	private List<AddressDTO> addresses;
 
 	public long getId() {
 		return id;
@@ -84,5 +86,13 @@ public class UserDto implements Serializable {
 
 	public void setEmailVerificationStatus(boolean emailVerificationStatus) {
 		this.emailVerificationStatus = emailVerificationStatus;
+	}
+
+	public List<AddressDTO> getAddresses() {
+		return addresses;
+	}
+
+	public void setAddresses(List<AddressDTO> addresses) {
+		this.addresses = addresses;
 	}
 }

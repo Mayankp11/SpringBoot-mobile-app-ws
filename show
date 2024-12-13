@@ -1,0 +1,151 @@
+[33mcommit 58ade441069c08a575a3b3ceb22fca19ec5656a7[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m)[m
+Author: Mayank <mayankpatil2605@gmail.com>
+Date:   Thu Dec 12 23:03:02 2024 -0800
+
+    added addressDTO & AddressRequestModel
+
+[1mdiff --git a/src/main/java/com/techsorcerer/mobile_app_ws/service/impl/UserServiceImpl.java b/src/main/java/com/techsorcerer/mobile_app_ws/service/impl/UserServiceImpl.java[m
+[1mindex 25192a3..19296fa 100644[m
+[1m--- a/src/main/java/com/techsorcerer/mobile_app_ws/service/impl/UserServiceImpl.java[m
+[1m+++ b/src/main/java/com/techsorcerer/mobile_app_ws/service/impl/UserServiceImpl.java[m
+[36m@@ -102,6 +102,10 @@[m [mpublic class UserServiceImpl implements UserService {[m
+ 		if (userEntity == null)[m
+ 			throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());[m
+ 		[m
+[32m+[m		[32mif(userDto.getFirstName() == null|| userDto.getFirstName().isBlank() || userDto.getLastName() == null || userDto.getLastName().isBlank() ) {[m
+[32m+[m			[32mthrow new UserServiceException("FirstName and LastName are required");[m
+[32m+[m		[32m}[m
+[32m+[m[41m		[m
+ 		userEntity.setFirstName(userDto.getFirstName());[m
+ 		userEntity.setLastName(userDto.getLastName());[m
+ 		[m
+[1mdiff --git a/src/main/java/com/techsorcerer/mobile_app_ws/shared/dto/AddressDTO.java b/src/main/java/com/techsorcerer/mobile_app_ws/shared/dto/AddressDTO.java[m
+[1mnew file mode 100644[m
+[1mindex 0000000..7b9b8e0[m
+[1m--- /dev/null[m
+[1m+++ b/src/main/java/com/techsorcerer/mobile_app_ws/shared/dto/AddressDTO.java[m
+[36m@@ -0,0 +1,68 @@[m
+[32m+[m[32mpackage com.techsorcerer.mobile_app_ws.shared.dto;[m
+[32m+[m
+[32m+[m[32mpublic class AddressDTO {[m
+[32m+[m	[32mprivate long id;[m
+[32m+[m	[32mprivate String city;[m
+[32m+[m	[32mprivate String country;[m
+[32m+[m	[32mprivate String streetName;[m
+[32m+[m	[32mprivate String postalCode;[m
+[32m+[m	[32mprivate String type;[m
+[32m+[m	[32mprivate UserDto userDetails;[m
+[32m+[m
+[32m+[m	[32mpublic long getId() {[m
+[32m+[m		[32mreturn id;[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32mpublic void setId(long id) {[m
+[32m+[m		[32mthis.id = id;[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32mpublic String getCity() {[m
+[32m+[m		[32mreturn city;[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32mpublic void setCity(String city) {[m
+[32m+[m		[32mthis.city = city;[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32mpublic String getCountry() {[m
+[32m+[m		[32mreturn country;[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32mpublic void setCountry(String country) {[m
+[32m+[m		[32mthis.country = country;[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32mpublic String getStreetName() {[m
+[32m+[m		[32mreturn streetName;[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32mpublic void setStreetName(String streetName) {[m
+[32m+[m		[32mthis.streetName = streetName;[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32mpublic String getPostalCode() {[m
+[32m+[m		[32mreturn postalCode;[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32mpublic void setPostalCode(String postalCode) {[m
+[32m+[m		[32mthis.postalCode = postalCode;[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32mpublic String getType() {[m
+[32m+[m		[32mreturn type;[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32mpublic void setType(String type) {[m
+[32m+[m		[32mthis.type = type;[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32mpublic UserDto getUserDetails() {[m
+[32m+[m		[32mreturn userDetails;[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32mpublic void setUserDetails(UserDto userDetails) {[m
+[32m+[m		[32mthis.userDetails = userDetails;[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m[32m}[m
+[1mdiff --git a/src/main/java/com/techsorcerer/mobile_app_ws/ui/model/request/AddressRequestModel.java b/src/main/java/com/techsorcerer/mobile_app_ws/ui/model/request/AddressRequestModel.java[m
+[1mnew file mode 100644[m
+[1mindex 0000000..0db95bc[m
+[1m--- /dev/null[m
+[1m+++ b/src/main/java/com/techsorcerer/mobile_app_ws/ui/model/request/AddressRequestModel.java[m
+[36m@@ -0,0 +1,50 @@[m
+[32m+[m[32mpackage com.techsorcerer.mobile_app_ws.ui.model.request;[m
+[32m+[m
+[32m+[m[32mpublic class AddressRequestModel {[m
+[32m+[m	[32mprivate String city;[m
+[32m+[m	[32mprivate String country;[m
+[32m+[m	[32mprivate String streetName;[m
+[32m+[m	[32mprivate String postalCode;[m
+[32m+[m	[32mprivate String type;[m
+[32m+[m
+[32m+[m	[32mpublic String getCity() {[m
+[32m+[m		[32mreturn city;[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32mpublic void setCity(String city) {[m
+[32m+[m		[32mthis.city = city;[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32mpublic String getCountry() {[m
+[32m+[m		[32mreturn country;[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32mpublic void setCountry(String country) {[m
+[32m+[m		[32mthis.country = country;[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32mpublic String getStreetName() {[m
+[32m+[m		[32mreturn streetName;[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32mpublic void setStreetName(String streetName) {[m
+[32m+[m		[32mthis.streetName = streetName;[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32mpublic String getPostalCode() {[m
+[32m+[m		[32mreturn postalCode;[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32mpublic void setPostalCode(String postalCode) {[m
+[32m+[m		[32mthis.postalCode = postalCode;[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32mpublic String getType() {[m
+[32m+[m		[32mreturn type;[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32mpublic void setType(String type) {[m
+[32m+[m		[32mthis.type = type;[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m[32m}[m

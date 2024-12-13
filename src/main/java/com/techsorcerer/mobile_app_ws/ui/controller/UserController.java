@@ -3,6 +3,7 @@ package com.techsorcerer.mobile_app_ws.ui.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -69,8 +70,11 @@ public class UserController {
 	public UserRest updateUser(@PathVariable String id, @RequestBody UserDetailsRequestModel userDetails) {
 		UserRest returnValue = new UserRest();
 		
-		UserDto userDto = new UserDto();
-		BeanUtils.copyProperties(userDetails, userDto);
+//		UserDto userDto = new UserDto();
+//		BeanUtils.copyProperties(userDetails, userDto);
+		
+		ModelMapper modelMapper = new ModelMapper();
+		UserDto userDto = modelMapper.map(userDetails, UserDto.class);
 		
 		UserDto updateUser = userService.updateUser(id, userDto);
 		BeanUtils.copyProperties(updateUser, returnValue);

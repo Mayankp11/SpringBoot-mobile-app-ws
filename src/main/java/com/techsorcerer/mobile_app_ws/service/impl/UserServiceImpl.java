@@ -102,6 +102,10 @@ public class UserServiceImpl implements UserService {
 		if (userEntity == null)
 			throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
 		
+		if(userDto.getFirstName() == null|| userDto.getFirstName().isBlank() || userDto.getLastName() == null || userDto.getLastName().isBlank() ) {
+			throw new UserServiceException("FirstName and LastName are required");
+		}
+		
 		userEntity.setFirstName(userDto.getFirstName());
 		userEntity.setLastName(userDto.getLastName());
 		
