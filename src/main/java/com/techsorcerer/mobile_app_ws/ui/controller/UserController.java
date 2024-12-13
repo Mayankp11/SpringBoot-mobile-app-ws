@@ -50,6 +50,8 @@ public class UserController {
 		// The JSON will contain UserDetailsRequestModel
 		// obj(firstName,lastName,email,password) then the JSON will be converted to
 		// java obj of the class and used in business logic
+		
+		
 		UserRest returnValue = new UserRest();
 
 		if (userDetails.getFirstName().isEmpty())

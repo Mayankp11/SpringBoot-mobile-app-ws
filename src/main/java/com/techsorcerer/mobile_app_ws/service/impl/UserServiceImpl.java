@@ -51,16 +51,16 @@ public class UserServiceImpl implements UserService {
 		
 		//Now each addressDTO has a list of addresses and has a user_id, user details and can set the adresses for each user
 		for(int i = 0; i < user.getAddresses().size(); i++) {
-			AddressDTO addressDTO = new AddressDTO();
+			AddressDTO addressDTO = user.getAddresses().get(i);
 			addressDTO.setUserDetails(user);
 			addressDTO.setAddressId(utils.generateAddressId(30));
-			user.getAddresses().set(i, addressDTO);
+			user.getAddresses().set(i, addressDTO);   //set all the details to userDto object(user) which is going to be returned
 		}
 
-		UserEntity userEntity = new UserEntity();
+//		UserEntity userEntity = new UserEntity();
 //		BeanUtils.copyProperties(user, userEntity);
 		ModelMapper modelMapper = new ModelMapper();
-		userEntity = modelMapper.map(user, UserEntity.class);
+		UserEntity userEntity = modelMapper.map(user, UserEntity.class);
 
 		String publicUserId = utils.generateUserId(30);
 		userEntity.setUserId(publicUserId);
