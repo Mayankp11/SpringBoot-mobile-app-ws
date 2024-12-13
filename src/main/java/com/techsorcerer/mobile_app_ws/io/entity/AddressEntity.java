@@ -1,13 +1,44 @@
-package com.techsorcerer.mobile_app_ws.shared.dto;
+package com.techsorcerer.mobile_app_ws.io.entity;
 
-public class AddressDTO {
+import java.io.Serializable;
+
+import com.techsorcerer.mobile_app_ws.shared.dto.UserDto;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
+@Entity(name = "addresses")
+public class AddressEntity implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue
 	private long id;
+
+	@Column(nullable = false, length = 30)
 	private String addressId;
+
+	@Column(nullable = false, length = 15)
 	private String city;
+
+	@Column(nullable = false, length = 15)
 	private String country;
+
+	@Column(nullable = false, length = 100)
 	private String streetName;
+
+	@Column(nullable = false, length = 10)
 	private String postalCode;
+
+	@Column(nullable = false, length = 10)
 	private String type;
+
+	@ManyToOne
+	@JoinColumn(name = "users_id")
 	private UserDto userDetails;
 
 	public long getId() {

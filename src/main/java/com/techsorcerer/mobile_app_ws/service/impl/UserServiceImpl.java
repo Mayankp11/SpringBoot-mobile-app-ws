@@ -6,8 +6,10 @@ package com.techsorcerer.mobile_app_ws.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.amqp.RabbitConnectionDetails.Address;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +25,7 @@ import com.techsorcerer.mobile_app_ws.io.entity.UserEntity;
 import com.techsorcerer.mobile_app_ws.io.repository.UserRepository;
 import com.techsorcerer.mobile_app_ws.service.UserService;
 import com.techsorcerer.mobile_app_ws.shared.Utils;
+import com.techsorcerer.mobile_app_ws.shared.dto.AddressDTO;
 import com.techsorcerer.mobile_app_ws.shared.dto.UserDto;
 import com.techsorcerer.mobile_app_ws.ui.response.ErrorMessages;
 
@@ -45,9 +48,19 @@ public class UserServiceImpl implements UserService {
 
 		if (userRepository.findByEmail(user.getEmail()) != null)
 			throw new RuntimeException("Record already exists");
+		
+		//Now each addressDTO has a list of addresses and has a user_id, user details and can set the adresses for each user
+		for(int i = 0; i < user.getAddresses().size(); i++) {
+			AddressDTO addressDTO = new AddressDTO();
+			addressDTO.setUserDetails(user);
+			addressDTO.setAddressId(utils.generateAddressId(30));
+			user.getAddresses().set(i, addressDTO);
+		}
 
 		UserEntity userEntity = new UserEntity();
-		BeanUtils.copyProperties(user, userEntity);
+//		BeanUtils.copyProperties(user, userEntity);
+		ModelMapper modelMapper = new ModelMapper();
+		userEntity = modelMapper.map(user, UserEntity.class);
 
 		String publicUserId = utils.generateUserId(30);
 		userEntity.setUserId(publicUserId);
@@ -55,8 +68,9 @@ public class UserServiceImpl implements UserService {
 
 		UserEntity storeUserDetails = userRepository.save(userEntity);
 
-		UserDto returnValue = new UserDto();
-		BeanUtils.copyProperties(storeUserDetails, returnValue);
+//		BeanUtils.copyProperties(storeUserDetails, returnValue);
+		UserDto returnValue = modelMapper.map(storeUserDetails, UserDto.class);
+		
 
 		return returnValue;
 	}

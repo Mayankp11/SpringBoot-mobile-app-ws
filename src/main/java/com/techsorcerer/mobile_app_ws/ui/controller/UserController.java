@@ -56,11 +56,14 @@ public class UserController {
 			throw new NullPointerException("The object is null");
 //		if(userDetails.getEmail().isEmpty()) throw new UserServiceException(ErrorMessages.EMAIL_ID_IS_MISSING.getErrorMessage());
 
-		UserDto userDto = new UserDto();
-		BeanUtils.copyProperties(userDetails, userDto);
+//		UserDto userDto = new UserDto();
+//		BeanUtils.copyProperties(userDetails, userDto);
+		
+		ModelMapper modelMapper = new ModelMapper();
+		UserDto userDto = modelMapper.map(userDetails, UserDto.class);
 
 		UserDto createdUser = userService.createUser(userDto);
-		BeanUtils.copyProperties(createdUser, returnValue);
+		returnValue = modelMapper.map(createdUser, UserRest.class);
 
 		return returnValue;
 	}
