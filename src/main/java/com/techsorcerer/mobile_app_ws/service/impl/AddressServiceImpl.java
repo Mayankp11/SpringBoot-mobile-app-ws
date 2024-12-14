@@ -5,13 +5,16 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.techsorcerer.mobile_app_ws.io.entity.AddressEntity;
 import com.techsorcerer.mobile_app_ws.io.entity.UserEntity;
+import com.techsorcerer.mobile_app_ws.io.repository.AddressRepository;
 import com.techsorcerer.mobile_app_ws.io.repository.UserRepository;
 import com.techsorcerer.mobile_app_ws.service.AddressService;
 import com.techsorcerer.mobile_app_ws.shared.dto.AddressDto;
 
+@Service
 public class AddressServiceImpl implements AddressService {
 	
 	@Autowired
@@ -34,7 +37,7 @@ public class AddressServiceImpl implements AddressService {
 			returnValue.add(modelMapper.map(addressEntity, AddressDto.class));
 		}
 		
-		return null;
+		return returnValue;
 	}
 
 }

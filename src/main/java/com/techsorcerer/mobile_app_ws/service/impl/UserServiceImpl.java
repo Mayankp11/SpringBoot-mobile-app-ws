@@ -25,7 +25,7 @@ import com.techsorcerer.mobile_app_ws.io.entity.UserEntity;
 import com.techsorcerer.mobile_app_ws.io.repository.UserRepository;
 import com.techsorcerer.mobile_app_ws.service.UserService;
 import com.techsorcerer.mobile_app_ws.shared.Utils;
-import com.techsorcerer.mobile_app_ws.shared.dto.AddressDTO;
+import com.techsorcerer.mobile_app_ws.shared.dto.AddressDto;
 import com.techsorcerer.mobile_app_ws.shared.dto.UserDto;
 import com.techsorcerer.mobile_app_ws.ui.response.ErrorMessages;
 
@@ -51,10 +51,10 @@ public class UserServiceImpl implements UserService {
 		
 		//Now each addressDTO has a list of addresses and has a user_id, user details and can set the adresses for each user
 		for(int i = 0; i < user.getAddresses().size(); i++) {
-			AddressDTO addressDTO = user.getAddresses().get(i);
-			addressDTO.setUserDetails(user);
-			addressDTO.setAddressId(utils.generateAddressId(30));
-			user.getAddresses().set(i, addressDTO);   //set all the details to userDto object(user) which is going to be returned
+			AddressDto addressDto = user.getAddresses().get(i);
+			addressDto.setUserDetails(user);
+			addressDto.setAddressId(utils.generateAddressId(30));
+			user.getAddresses().set(i, addressDto);   //set all the details to userDto object(user) which is going to be returned
 		}
 
 //		UserEntity userEntity = new UserEntity();

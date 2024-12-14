@@ -1,6 +1,6 @@
 package com.techsorcerer.mobile_app_ws.shared.dto;
 
-public class AddressDTO {
+public class AddressDto {
 	private long id;
 	private String addressId;
 	private String city;
