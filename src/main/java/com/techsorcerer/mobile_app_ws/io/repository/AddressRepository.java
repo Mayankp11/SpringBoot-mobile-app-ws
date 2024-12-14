@@ -11,4 +11,6 @@ import com.techsorcerer.mobile_app_ws.io.entity.UserEntity;
 @Repository
 public interface AddressRepository extends CrudRepository<AddressEntity, Long> { //In AddressEntity class, we have the db id which is auto incremented in the AddressEntity
 	List<AddressEntity> findAllByUserDetails(UserEntity userEntity);
+
+	AddressEntity findByAddressId(String addressId);
 }

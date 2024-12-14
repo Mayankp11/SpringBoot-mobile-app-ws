@@ -3,6 +3,8 @@ package com.techsorcerer.mobile_app_ws.ui.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.print.attribute.standard.Media;
+
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.BeanUtils;
@@ -38,6 +40,9 @@ public class UserController {
 
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	AddressService addressService;
 	
 	@Autowired
 	AddressService addressesService;
@@ -137,6 +142,17 @@ public class UserController {
 		}
 		
 		return returnValue;
+	}
+	
+	@GetMapping(path = "/{userId}/addresses/{addressId}" , produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+	public AddressesRest getUserAddress(@PathVariable String addressId) {
+		
+		AddressDto addressDto = addressService.getAddress(addressId);
+		
+		ModelMapper modelMapper = new ModelMapper();
+		
+		return modelMapper.map(addressDto, AddressesRest.class);
+		
 	}
 	
 }
