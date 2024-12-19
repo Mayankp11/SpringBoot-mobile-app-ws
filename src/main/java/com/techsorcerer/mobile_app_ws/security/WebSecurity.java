@@ -166,6 +166,7 @@ public class WebSecurity {
         http.csrf().disable()
            .authorizeHttpRequests(auth -> auth
                .requestMatchers(HttpMethod.POST, SecurityConstants.SIGN_UP_URL).permitAll()
+               .requestMatchers(HttpMethod.GET, SecurityConstants.AWS_VERIFICATION_EMAIL_URL).permitAll()
                .anyRequest().authenticated()
            )
            .addFilter(authenticationFilter)
