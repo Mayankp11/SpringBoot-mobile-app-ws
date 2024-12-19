@@ -64,6 +64,8 @@ public class UserServiceImpl implements UserService {
 		String publicUserId = utils.generateUserId(30);
 		userEntity.setUserId(publicUserId);
 		userEntity.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+		userEntity.setEmailVerificationToken(utils.generateEmailVerificationToken(publicUserId));
+		userEntity.setEmailVerificationStatus(false);
 
 		UserEntity storeUserDetails = userRepository.save(userEntity);
 
@@ -162,6 +164,25 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		return returnValue ; 
+	}
+
+	@Override
+	public boolean verifyEmailToken(String token) {
+		boolean returnvalue = false;
+		
+		//find user by token
+		UserEntity userEntity = userRepository.findUserByEmailVerificationToken(token);
+		
+		if(userEntity != null) {
+			boolean hasTokenExpired = Utils.hasTokenExpired(token);
+			if(!hasTokenExpired) {
+				userEntity.setEmailVerificationToken(null);
+				userEntity.setEmailVerificationStatus(Boolean.TRUE);
+				userRepository.save(userEntity);
+				returnvalue = true;
+			}
+		}
+		return returnvalue;
 	}
 	
 	

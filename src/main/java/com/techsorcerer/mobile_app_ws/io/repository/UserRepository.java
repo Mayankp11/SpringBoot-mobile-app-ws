@@ -12,4 +12,5 @@ public interface UserRepository extends PagingAndSortingRepository<UserEntity, L
 	//This are called as Query methods and we have to use find
 	UserEntity findByEmail(String email);
 	UserEntity findByUserId(String userId);
+	UserEntity findUserByEmailVerificationToken(String token);
 }
