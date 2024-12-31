@@ -3,9 +3,11 @@ package com.techsorcerer.mobile_app_ws;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
 
 
 //This is an helper class to access Spring beans when you cannot create beans of a class
+@Component
 public class SpringApplicationContext implements ApplicationContextAware {
 
 	private static ApplicationContext CONTEXT;
